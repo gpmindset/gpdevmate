@@ -1,0 +1,27 @@
+{
+  "name": "gpdevmate",
+  "version": "1.0.0",
+  "description": "gpdevmate is a code reviewer",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpmindset/gpdevmate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gpmindset/gpdevmate/issues"
+  },
+  "homepage": "https://github.com/gpmindset/gpdevmate#readme",
+  "devDependencies": {
+    "@types/node": "^24.0.8",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
