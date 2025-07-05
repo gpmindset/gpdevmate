@@ -1,2 +1,1 @@
-import { config } from "@dotenvx/dotenvx"
-config()
+export * from "./agent"

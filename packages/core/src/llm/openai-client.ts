@@ -1,6 +1,7 @@
 import {OpenAI} from "openai";
+import {LLMClient} from "../interfaces";
 
-export class OpenAiClient {
+export class OpenAiClient implements LLMClient {
 
     private openai: OpenAI
 
@@ -11,7 +12,7 @@ export class OpenAiClient {
         })
     }
 
-    async reviewCode(code: string, language: string): Promise<string> {
+    async callModel(prompt: string): Promise<string> {
 
         const response = await this.openai.chat.completions.create({
             model: this.model,
@@ -24,7 +25,7 @@ export class OpenAiClient {
                 },
                 {
                     role: "user",
-                    content: `Review the following ${language} code and give constructive feedback:\n\n\`\`\`${language}\n${code}\n\`\`\``
+                    content: prompt
                 }
             ]
         })

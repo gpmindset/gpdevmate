@@ -1,7 +1,8 @@
 import fs from "fs/promises"
 import path from "path";
-import * as console from "node:console";
-import {ReviewTarget} from "../types";
+import {Utils} from "../utils";
+import {PlannerConfig} from "../types";
+
 
 const SKIP_DIRS = new Set([
     'node_modules',
@@ -16,37 +17,62 @@ const SKIP_DIRS = new Set([
     '.idea'
 ]);
 
-const MAX_FILE_SIZE_BYTES = 500 * 1024; // 500 KB
-
 export class Planner {
-    async plan(target: string): Promise<ReviewTarget[]> {
 
-        const target_files: ReviewTarget[] = []
+    private readonly maxFiles: number = 5
+    private readonly maxFileSize: number = 200 * 1024
+    private skipDirs: Set<string>
 
-        const walk = async (dir: string) => {
-            const entries = await fs.readdir(dir, { withFileTypes: true })
+    constructor(config: PlannerConfig) {
+        this.maxFiles = config.maxFiles;
+        this.skipDirs = new Set([...SKIP_DIRS, ...config.skipDirs]);
+        this.maxFileSize = config.maxFileSizeBytes
+    }
 
-            for (const entry of entries) {
-                const fullPath = path.join(dir, entry.name)
-
+    async planFiles(target: string): Promise<string[]> {
+        const entries = await fs.readdir(target, { withFileTypes: true });
+        const files = await Promise.all(
+            entries.map(entry => {
+                const resolved = path.resolve(target, entry.name)
                 if (entry.isDirectory()) {
-                    if (SKIP_DIRS.has(entry.name)) continue;
-                    await walk(fullPath)
-                } else if(entry.name.endsWith(".js") || entry.name.endsWith(".ts")) {
-                    try {
-                        const stats = await fs.stat(fullPath)
-                        if (stats.size > MAX_FILE_SIZE_BYTES) continue;
-
-                        const content = await fs.readFile(fullPath, 'utf-8')
-                        target_files.push({ filePath: fullPath, content })
-                    } catch (e) {
-                        console.warn(`⚠️ Failed to read file: ${fullPath}`, e)
-                    }
+                    if (this.skipDirs.has(entry.name)) return []
+                    return this.planFiles(resolved)
+                } else {
+                    return [resolved]
                 }
-            }
+            })
+        )
+
+        return  Array.prototype.concat(...files)
+    }
+
+    async selectValidFiles(target: string): Promise<string[]> {
+        const allFiles = await this.planFiles(target);
+
+        const filtered = []
+
+        for (const file of allFiles) {
+            if (!Utils.isCodeFile(file)) continue;
+
+            const stats = await fs.stat(file)
+            if (stats.size > this.maxFileSize) continue;
+
+            filtered.push(file)
+            if (filtered.length >= this.maxFiles) break;
         }
 
-        await walk(target)
-        return target_files
+        return filtered
+    }
+
+    async buildPrompt(files: string[]): Promise<string> {
+        let batchPrompt = `You are a senior developer. Review the following code files and provide detailed feedback, improvements, and bug fixes.\n\n`;
+
+        for (const file of files) {
+            const content = await fs.readFile(file, 'utf-8')
+            const lang = Utils.getLanguage(file)
+            batchPrompt += `File: ${path.basename(file)}\\n\\n\u0060\u0060\u0060${lang}\\n${content}\\n\u0060\u0060\u0060\\n\\n`
+        }
+
+        return batchPrompt;
     }
 }

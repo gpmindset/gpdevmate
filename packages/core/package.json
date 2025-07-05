@@ -2,8 +2,17 @@
   "name": "@gpdevmate/core",
   "version": "1.0.0",
   "description": "GPdevmate's internal core library contains core logic",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf dist",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsc -w",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
@@ -11,7 +20,6 @@
   },
   "private": true,
   "dependencies": {
-    "openai": "^5.8.2",
-    "@dotenvx/dotenvx": "^1.45.2"
+    "openai": "^5.8.2"
   }
 }

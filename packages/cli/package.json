@@ -2,8 +2,13 @@
   "name": "@gpdevmate/cli",
   "version": "1.0.0",
   "description": "gpdevmate is a CLI-based AI agent that performs intelligent code reviews",
+  "bin": {
+    "gpdevmate": "./dist/index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "dev": "dotenvx run --quiet -- tsx src/index.ts",
+    "start": "dotenvx run --quiet -- node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -11,6 +16,9 @@
   },
   "private": true,
   "dependencies": {
-    "commander": "^14.0.0"
+    "commander": "^14.0.0",
+    "@gpdevmate/core": "workspace:*",
+    "@dotenvx/dotenvx": "^1.45.2",
+    "@inquirer/prompts": "^7.6.0"
   }
 }
