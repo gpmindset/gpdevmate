@@ -3,6 +3,7 @@ import * as os from "node:os";
 import * as fs from "node:fs";
 import {input, select} from "@inquirer/prompts";
 import {Logger} from "@gpdevmate/core";
+import { parse } from "@dotenvx/dotenvx"
 
 export class ConfigWizard {
 
@@ -60,6 +61,12 @@ export class ConfigWizard {
                 fs.mkdirSync(this.configDir, { recursive: true })
             }
 
+            let existingEnv = {}
+
+            if (fs.existsSync(this.configPath)) {
+                existingEnv = parse(fs.readFileSync(this.configPath, "utf8"));
+            }
+
             let prompts = {}
 
             switch (mode) {
@@ -85,7 +92,9 @@ export class ConfigWizard {
                     return;
             }
 
-            const envContent = Object.entries(prompts)
+            let updateEnv = { ...existingEnv, ...prompts };
+
+            const envContent = Object.entries(updateEnv)
                 .map(([k, v]) => `${k}=${v}`)
                 .join('\n') + '\n';
 
