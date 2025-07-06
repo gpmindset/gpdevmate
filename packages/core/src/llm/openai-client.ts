@@ -1,11 +1,18 @@
 import {OpenAI} from "openai";
 import {LLMClient} from "../interfaces";
+import {Logger} from "../logger";
 
 export class OpenAiClient implements LLMClient {
 
     private openai: OpenAI
 
     constructor(baseUrl: string = process.env.OPENAI_BASE_URL!, apiKey: string = process.env.OPENAI_API_KEY!, private model = "openai/gpt-4o-mini") {
+
+        if (!apiKey) {
+            Logger.error('API key is missing. Use "gpdevmate config --mode openai" to configure your API keys.');
+            throw new Error('Missing API key. Use "gpdevmate config" to set it.');
+        }
+
         this.openai = new OpenAI({
             baseURL: baseUrl,
             apiKey: apiKey,

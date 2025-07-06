@@ -7,8 +7,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "dotenvx run --quiet -- tsx src/index.ts",
-    "start": "dotenvx run --quiet -- node dist/index.js"
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "commander": "^14.0.0",
     "@gpdevmate/core": "workspace:*",
     "@dotenvx/dotenvx": "^1.45.2",
-    "@inquirer/prompts": "^7.6.0"
+    "@inquirer/prompts": "^7.6.0",
+    "chalk":"^5.4.1"
   }
 }

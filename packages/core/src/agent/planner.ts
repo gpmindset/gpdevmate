@@ -30,6 +30,14 @@ export class Planner {
     }
 
     async planFiles(target: string): Promise<string[]> {
+        const resolvedPath = path.isAbsolute(target) ? target : path.resolve(process.cwd(), target);
+
+        const stats  = await fs.stat(resolvedPath);
+
+        if (stats.isFile()) {
+            return [resolvedPath]
+        }
+
         const entries = await fs.readdir(target, { withFileTypes: true });
         const files = await Promise.all(
             entries.map(entry => {
@@ -65,7 +73,8 @@ export class Planner {
     }
 
     async buildPrompt(files: string[]): Promise<string> {
-        let batchPrompt = `You are a senior developer. Review the following code files and provide detailed feedback, improvements, and bug fixes.\n\n`;
+        let batchPrompt = `You are a senior developer. Review the following code files and provide detailed feedback, improvements, and bug fixes.\n\n Please review the following files. For each file, give suggestions using Markdown formatting.
+Use headers for filenames, bullet points for issues, and fenced code blocks for examples.\n\n`;
 
         for (const file of files) {
             const content = await fs.readFile(file, 'utf-8')

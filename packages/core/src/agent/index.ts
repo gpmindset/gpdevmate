@@ -5,7 +5,8 @@ import {OpenAiClient} from "../llm/openai-client";
 import {OllamaClient} from "../llm/ollama-client";
 import {HuggingfaceClient} from "../llm/huggingface-client";
 import {Utils} from "../utils";
-import path from "path";
+import path from "path"
+import {Logger} from "../logger";
 
 export class CodeReviewAgent {
     private planner: Planner;
@@ -26,34 +27,38 @@ export class CodeReviewAgent {
         this.reviewer = new Reviewer(client)
     }
 
-    async execute(): Promise<void> {
-        try{
-            const fullPath = path.resolve(process.cwd(), this.options.path)
+    async dryRun(): Promise<string[]> {
+        const fullPath = path.resolve(process.cwd(), this.options.path)
 
-            const files = await this.planner.selectValidFiles(fullPath)
+        let files: string[];
+        files = await this.planner.selectValidFiles(fullPath);
 
-            if (this.options.dryRun) {
-                console.log('📦 Files to review:')
-                files.forEach(f => console.log(`- ${f}`))
-                return
-            }
+        return files;
+    }
 
-            const prompt = await this.planner.buildPrompt(files)
-            const tokens = Utils.estimateTokens(prompt)
+    async getReview(): Promise<string | undefined> {
+        const fullPath = path.resolve(process.cwd(), this.options.path);
 
-            if (tokens > 7000) {
-                console.warn(`⚠️ Estimated ${tokens} tokens, may exceed model limits.`)
-            }
+        Logger.info('📁 Scanning Files...');
+        const files = await this.planner.selectValidFiles(fullPath);
+        Logger.info(`✅ ${files.length} files selected for review.`);
 
-            const feedback = await this.reviewer.review(prompt)
-            console.log('\n🧠 AI Review Feedback:\n');
-            console.log(feedback);
-        } catch (error) {
-            if (error instanceof Error && error.name === 'ExitPromptError') {
-                // noop; silence this error
-            } else {
-                throw error;
-            }
+        Logger.info('🧠 Building AI Prompt...');
+        const prompt = await this.planner.buildPrompt(files);
+        Logger.info(`✅ Prompt built successfully.`);
+
+        Logger.info('📏 Estimating Tokens...');
+        const tokens = Utils.estimateTokens(prompt);
+        Logger.info(`Estimated token count: ${tokens}`);
+
+        if (tokens > 7000) {
+            Logger.warn(`Token count may exceed model limit! (${tokens})`);
         }
+
+        Logger.info('🤖 Requesting AI Feedback...');
+        const feedback = await this.reviewer.review(prompt);
+        Logger.info(`✅ Feedback received.`);
+
+        return feedback;
     }
 }

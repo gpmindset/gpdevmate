@@ -8,7 +8,6 @@ export interface AgentOptions {
     path: string;
     mode: 'openai' | 'local' | 'api';
     maxFiles: number;
-    dryRun?: boolean;
     skipDirs: Set<string>;
     maxFileSizeBytes: number;
 }

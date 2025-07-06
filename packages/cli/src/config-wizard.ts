@@ -1,16 +1,63 @@
 import * as path from "node:path";
 import * as os from "node:os";
 import * as fs from "node:fs";
-import { input } from "@inquirer/prompts";
+import {input, select} from "@inquirer/prompts";
+import {Logger} from "@gpdevmate/core";
 
 export class ConfigWizard {
+
+    private static configDir = path.join(os.homedir(), '.gpdevmate')
+    private static configPath = path.join(this.configDir, ".env")
+
+
+    static isEnvExists(): boolean {
+        return fs.existsSync(this.configPath);
+    }
+
+    static getConfigPath(): string {
+        return this.configPath
+    }
+
+    static async pickMode(): Promise<string | undefined> {
+        try {
+
+            let mode: string;
+            mode = await select({
+                message: "Select Mode",
+                choices: [
+                    {
+                        name: "OpenAI",
+                        value: "openai"
+                    },
+                    {
+                        name: "Local",
+                        value: "local",
+                        description: "Use Ollama to run models locally"
+                    },
+                    {
+                        name: "API",
+                        value: "api",
+                        description: "Use Huggingface API to run models"
+                    }
+                ]
+            });
+
+            return mode
+
+        } catch (error) {
+            if (error instanceof Error && error.name === 'ExitPromptError') {
+                // noop; silence this error
+            } else {
+                throw error;
+            }
+        }
+    }
+
     static async run(mode: string) {
         try {
-            const configDir = path.join(os.homedir(), '.gpdevmate')
-            const configPath = path.join(configDir, ".env")
 
-            if (!fs.existsSync(configDir)) {
-                fs.mkdirSync(configDir, { recursive: true })
+            if (!fs.existsSync(this.configDir)) {
+                fs.mkdirSync(this.configDir, { recursive: true })
             }
 
             let prompts = {}
@@ -34,7 +81,7 @@ export class ConfigWizard {
                     }
                     break;
                 default:
-                    console.error('❌ Invalid mode. Use "openai", "local", or "api".');
+                    Logger.error('Invalid mode. Use "openai", "local", or "api".');
                     return;
             }
 
@@ -42,8 +89,8 @@ export class ConfigWizard {
                 .map(([k, v]) => `${k}=${v}`)
                 .join('\n') + '\n';
 
-            fs.writeFileSync(configPath, envContent, { encoding: 'utf-8' });
-            console.log(`✅ Config saved to ${configPath}`);
+            fs.writeFileSync(this.configPath, envContent, { encoding: 'utf-8' });
+            Logger.info(`✅ Config saved to ${this.configPath}`);
 
         } catch (error) {
             if (error instanceof Error && error.name === 'ExitPromptError') {
