@@ -1,8 +1,8 @@
 import {OpenAI} from "openai";
-import {LLMClient} from "../interfaces";
-import {Logger} from "../logger";
+import { ILLMProvider } from "../../interfaces";
+import {Logger} from "../../logger";
 
-export class OpenAiClient implements LLMClient {
+export class OpenAiClient implements ILLMProvider {
 
     private openai: OpenAI
 
@@ -19,7 +19,7 @@ export class OpenAiClient implements LLMClient {
         })
     }
 
-    async callModel(prompt: string): Promise<string> {
+    async reviewCode(prompt: string): Promise<string> {
 
         const response = await this.openai.chat.completions.create({
             model: this.model,

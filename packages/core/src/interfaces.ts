@@ -1,5 +1,5 @@
-export interface LLMClient {
-    callModel(prompt: string): Promise<string>
+export interface ILLMProvider {
+    reviewCode(prompt: string): Promise<string>
 }
 
 export interface ILogger {

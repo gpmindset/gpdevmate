@@ -18,7 +18,7 @@ program
 program
     .command("review")
     .argument("<target>", "Path to the directory")
-    .option("--mode <mode>", "LLM Mode: openai | local | api", "openai")
+    .option("--provider <provider>", "LLM Provider: openai | ollama | hf", "openai")
     .option('--limit <number>', 'Max number of files to review', '5')
     .option('--skip-dirs <dirs>', 'Comma-separated list of directories to skip', val => val.split(','), [])
     .option("--dry-run", "Show which files are going to be reviewed")
@@ -29,14 +29,14 @@ program
         const isEnvExists = ConfigWizard.isEnvExists()
 
         if (!isEnvExists) {
-            await ConfigWizard.run(options.mode)
+            await ConfigWizard.run(options.provider)
         }
 
         config({ path: ConfigWizard.getConfigPath(), quiet: true })
 
         const agent = new CodeReviewAgent({
             path: target,
-            mode: options.mode,
+            provider: options.provider,
             maxFiles: parseInt(options.limit),
             skipDirs: new Set(options.skipDirs),
             maxFileSizeBytes: 200 * 1024,
@@ -71,16 +71,22 @@ program
 
 program
     .command("config")
-    .option("--mode <mode>", "LLM Mode: openai | local | api")
-    .action(async (options) => {
-        if (!options.mode) {
-            const mode = await ConfigWizard.pickMode()
-            if (mode) {
-                await ConfigWizard.run(mode)
+    .option("--provider <provider>", "Set default LLM Provider: openai | ollama | hf")
+    .option("--update", "To update provider configs")
+    .action(async function (options) {
+        if (!options.provider && options.update) { // Update provider and its config
+            const provider = await ConfigWizard.pickProvider()
+            if (provider) {
+                await ConfigWizard.run(provider)
             }
             return;
+        } else if (options.provider && !options.update)  { // Update provider only
+            await ConfigWizard.setProvider(options.provider)
+        } else if (options.provider && options.update) { // Update specific provider config
+            await ConfigWizard.run(options.provider)
+        } else {
+            this.help()
         }
-        await ConfigWizard.run(options.mode)
     })
 
 program.parse()

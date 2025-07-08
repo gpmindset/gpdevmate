@@ -1,12 +1,10 @@
 import {Planner} from "./planner";
 import {Reviewer} from "./reviewer";
 import {AgentOptions} from "../types";
-import {OpenAiClient} from "../llm/openai-client";
-import {OllamaClient} from "../llm/ollama-client";
-import {HuggingfaceClient} from "../llm/huggingface-client";
 import {Utils} from "../utils";
 import path from "path"
 import {Logger} from "../logger";
+import {LLMProviderFactory} from "../llm/llm-provider-factory";
 
 export class CodeReviewAgent {
     private planner: Planner;
@@ -19,10 +17,8 @@ export class CodeReviewAgent {
             skipDirs: options.skipDirs,
         })
 
-        const client =
-            options.mode === "openai" ? new OpenAiClient() :
-                options.mode === "local" ? new OllamaClient() :
-                    new HuggingfaceClient()
+
+        const client = LLMProviderFactory.getProvider()
 
         this.reviewer = new Reviewer(client)
     }

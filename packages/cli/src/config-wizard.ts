@@ -19,11 +19,28 @@ export class ConfigWizard {
         return this.configPath
     }
 
-    static async pickMode(): Promise<string | undefined> {
+    private static updateEnv(updateData: object): void {
+        const envContent = Object.entries(updateData)
+            .map(([k, v]) => `${k}=${v}`)
+            .join('\n') + '\n';
+
+        fs.writeFileSync(this.configPath, envContent, { encoding: 'utf-8' });
+    }
+
+    private static getExistingEnv(): object {
+        let existingEnv = {}
+        if (fs.existsSync(this.configPath)) {
+            existingEnv = parse(fs.readFileSync(this.configPath, "utf8"));
+        }
+
+        return existingEnv;
+    }
+
+    static async pickProvider(): Promise<string | undefined> {
         try {
 
-            let mode: string;
-            mode = await select({
+            let provider: string;
+            provider = await select({
                 message: "Select Mode",
                 choices: [
                     {
@@ -31,19 +48,19 @@ export class ConfigWizard {
                         value: "openai"
                     },
                     {
-                        name: "Local",
-                        value: "local",
-                        description: "Use Ollama to run models locally"
+                        name: "Ollama",
+                        value: "ollama",
+                        description: ""
                     },
                     {
-                        name: "API",
-                        value: "api",
+                        name: "Huggingface",
+                        value: "hf",
                         description: "Use Huggingface API to run models"
                     }
                 ]
             });
 
-            return mode
+            return provider
 
         } catch (error) {
             if (error instanceof Error && error.name === 'ExitPromptError') {
@@ -54,34 +71,55 @@ export class ConfigWizard {
         }
     }
 
-    static async run(mode: string) {
+    static async setProvider(provider: string): Promise<void> {
+
+        if (provider !== "openai" && provider !== "ollama" && provider !== "hf") {
+            throw new Error("Invalid provider");
+        }
+
+        if (!fs.existsSync(this.configDir)) {
+            fs.mkdirSync(this.configDir, { recursive: true })
+        }
+
+        const providerEnv = { "MODEL_PROVIDER": provider };
+
+        const existingEnv = this.getExistingEnv();
+
+        let updateProvider = { ...existingEnv, ...providerEnv };
+
+        this.updateEnv(updateProvider);
+
+        Logger.info(`✅ Provider changed to: ${provider}`);
+
+    }
+
+    static async run(provider: string) {
         try {
 
             if (!fs.existsSync(this.configDir)) {
                 fs.mkdirSync(this.configDir, { recursive: true })
             }
 
-            let existingEnv = {}
-
-            if (fs.existsSync(this.configPath)) {
-                existingEnv = parse(fs.readFileSync(this.configPath, "utf8"));
-            }
+            let existingEnv = this.getExistingEnv();
 
             let prompts = {}
 
-            switch (mode) {
+            let updateModelProvider = { "MODEL_PROVIDER": provider }
+
+            switch (provider) {
                 case "openai":
                     prompts = {
                         "OPENAI_API_KEY": await input({ message: "Enter your OpenAI API key:", validate: value => value.trim() !== "" || "API Key cannot be empty." }),
                         "OPENAI_BASE_URL": await input({ message: "Enter your OpenAI Base Url address: (default: https://api.openai.com/v1)", default: "https://api.openai.com/v1" }),
                     }
                     break;
-                case "local":
+                case "ollama":
                     prompts = {
-                        "OLLAMA_HOST": await input({ message: "Enter your Ollama Host URL (default: http://localhost:11434):", default: "http://localhost:11434" })
+                        "OLLAMA_ENDPOINT": await input({ message: "Enter your Ollama Endpoint:", default: "http://localhost:11434" }),
+                        "OLLAMA_MODEL": await input({ message: "Enter model name running through Ollama:", default: "codellama"})
                     }
                     break;
-                case "api":
+                case "hf":
                     prompts = {
                         "HUGGINGFACE_API_KEY": await input({ message: "Enter your HuggingFace API key:", validate: (val) => val.trim() !== '' || 'API key cannot be empty' }),
                         "HUGGINGFACE_MODEL": await input({ message: "Enter the model name to use:", default: 'bigcode/starcoder' })
@@ -92,13 +130,9 @@ export class ConfigWizard {
                     return;
             }
 
-            let updateEnv = { ...existingEnv, ...prompts };
+            let updateEnv = { ...existingEnv, ...prompts, ...updateModelProvider };
 
-            const envContent = Object.entries(updateEnv)
-                .map(([k, v]) => `${k}=${v}`)
-                .join('\n') + '\n';
-
-            fs.writeFileSync(this.configPath, envContent, { encoding: 'utf-8' });
+            this.updateEnv(updateEnv)
             Logger.info(`✅ Config saved to ${this.configPath}`);
 
         } catch (error) {

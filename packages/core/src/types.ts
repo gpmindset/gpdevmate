@@ -6,7 +6,7 @@ export interface PlannerConfig {
 
 export interface AgentOptions {
     path: string;
-    mode: 'openai' | 'local' | 'api';
+    provider: 'openai' | 'ollama' | 'hf';
     maxFiles: number;
     skipDirs: Set<string>;
     maxFileSizeBytes: number;

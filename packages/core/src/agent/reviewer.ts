@@ -1,9 +1,9 @@
-import {LLMClient} from "../interfaces";
+import {ILLMProvider} from "../interfaces";
 
 export class Reviewer {
-    constructor(private client: LLMClient) {}
+    constructor(private client: ILLMProvider) {}
 
     async review(prompt: string): Promise<string> {
-        return this.client.callModel(prompt)
+        return this.client.reviewCode(prompt)
     }
 }
