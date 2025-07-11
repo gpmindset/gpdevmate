@@ -6,8 +6,17 @@ export class OllamaClient implements ILLMProvider {
     private readonly endpoint: string;
 
     constructor() {
-        this.model = process.env.OLLAMA_MODEL || "codellama";
+        this.model = process.env.OLLAMA_MODEL || "mistral";
         this.endpoint = process.env.OLLAMA_ENDPOINT || "http://localhost:11434";
+    }
+
+    async testConnection(): Promise<boolean> {
+        try {
+            const res = await fetch(`${this.endpoint}/api/tags`)
+            return res.ok
+        } catch (e) {
+            return false;
+        }
     }
 
     async reviewCode(prompt: string): Promise<string> {

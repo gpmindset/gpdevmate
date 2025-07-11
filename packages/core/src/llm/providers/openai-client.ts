@@ -19,6 +19,22 @@ export class OpenAiClient implements ILLMProvider {
         })
     }
 
+    async testConnection(): Promise<boolean> {
+        try {
+            await this.openai.chat.completions.create({
+                model: this.model,
+                messages: [
+                    { role: 'system', content: 'You are a ping bot' },
+                    { role: 'user', content: 'ping' }
+                ],
+                max_completion_tokens: 1,
+            });
+            return true
+        } catch (e) {
+            return false;
+        }
+    }
+
     async reviewCode(prompt: string): Promise<string> {
 
         const response = await this.openai.chat.completions.create({

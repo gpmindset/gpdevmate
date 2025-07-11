@@ -116,13 +116,13 @@ export class ConfigWizard {
                 case "ollama":
                     prompts = {
                         "OLLAMA_ENDPOINT": await input({ message: "Enter your Ollama Endpoint:", default: "http://localhost:11434" }),
-                        "OLLAMA_MODEL": await input({ message: "Enter model name running through Ollama:", default: "codellama"})
+                        "OLLAMA_MODEL": await input({ message: "Enter model name:", default: "mistral"})
                     }
                     break;
                 case "hf":
                     prompts = {
-                        "HUGGINGFACE_API_KEY": await input({ message: "Enter your HuggingFace API key:", validate: (val) => val.trim() !== '' || 'API key cannot be empty' }),
-                        "HUGGINGFACE_MODEL": await input({ message: "Enter the model name to use:", default: 'bigcode/starcoder' })
+                        "HUGGINGFACE_TOKEN": await input({ message: "Enter your HuggingFace Token:", validate: (val) => val.trim() !== '' || 'Token cannot be empty' }),
+                        "HUGGINGFACE_MODEL": await input({ message: "Enter the model name:", default: 'bigcode/starcoder' })
                     }
                     break;
                 default:

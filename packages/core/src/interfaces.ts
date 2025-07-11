@@ -1,5 +1,6 @@
 export interface ILLMProvider {
     reviewCode(prompt: string): Promise<string>
+    testConnection(): Promise<boolean>
 }
 
 export interface ILogger {

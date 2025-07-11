@@ -1,0 +1,35 @@
+{
+  "name": "@gpdevmate/github-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "gpdevmate is an AI-powered Github bot code review agent that automatically analyzes pull requests and provides smart, contextual feedback using local or cloud-based LLMs.",
+  "author": "SG Prakash",
+  "license": "ISC",
+  "homepage": "https://github.com//",
+  "keywords": [
+    "probot",
+    "github",
+    "probot-app"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node lib/index.js",
+    "dev": "tsx watch -- src/index.ts"
+  },
+  "dependencies": {
+    "probot": "^13.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "nock": "^14.0.5",
+    "smee-client": "^2.0.0",
+    "typescript": "^5.8.3"
+  },
+  "overrides": {
+    "@types/pg": "8.15.1"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "type": "module"
+}

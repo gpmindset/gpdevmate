@@ -5,6 +5,7 @@ import chalk from "chalk";
 import {ReviewReport} from "./review-report";
 import {StyledLogger} from "./styled-logger";
 import { config } from "@dotenvx/dotenvx"
+import {CheckConnection} from "./check-connection";
 
 setLogger(new StyledLogger())
 
@@ -18,7 +19,7 @@ program
 program
     .command("review")
     .argument("<target>", "Path to the directory")
-    .option("--provider <provider>", "LLM Provider: openai | ollama | hf", "openai")
+    .option("--provider <provider>", "LLM Provider: openai | ollama", "openai")
     .option('--limit <number>', 'Max number of files to review', '5')
     .option('--skip-dirs <dirs>', 'Comma-separated list of directories to skip', val => val.split(','), [])
     .option("--dry-run", "Show which files are going to be reviewed")
@@ -71,7 +72,8 @@ program
 
 program
     .command("config")
-    .option("--provider <provider>", "Set default LLM Provider: openai | ollama | hf")
+    .description("To set model provider and its config")
+    .option("--provider <provider>", "Set default LLM Provider: openai | ollama")
     .option("--update", "To update provider configs")
     .action(async function (options) {
         if (!options.provider && options.update) { // Update provider and its config
@@ -88,6 +90,14 @@ program
             this.help()
         }
     })
+
+program
+    .command("check")
+    .description("To check whether provider is reachable")
+    .action(async function (options) {
+        await CheckConnection.checkProvider()
+    })
+
 
 program.parse()
 
