@@ -24,7 +24,7 @@ importers:
         specifier: ^13.4.5
         version: 13.4.5
     devDependencies:
-      '@gpdevmate/core':
+      '@sgprakas/gpdevmate-core':
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
@@ -45,12 +45,12 @@ importers:
       '@dotenvx/dotenvx':
         specifier: ^1.45.2
         version: 1.45.2
-      '@gpdevmate/core':
-        specifier: workspace:*
-        version: link:../core
       '@inquirer/prompts':
         specifier: ^7.6.0
         version: 7.6.0(@types/node@24.0.8)
+      '@sgprakas/gpdevmate-core':
+        specifier: workspace:*
+        version: link:../core
       chalk:
         specifier: ^5.4.1
         version: 5.4.1
