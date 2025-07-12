@@ -2,7 +2,7 @@ import chalk from "chalk";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as process from "node:process";
-import {Logger} from "@gpdevmate/core";
+import {Logger} from "@sgprakas/gpdevmate-core";
 
 export class ReviewReport {
 

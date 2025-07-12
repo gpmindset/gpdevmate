@@ -1,5 +1,5 @@
 import {Context, Probot} from "probot";
-import {PRCodeReviewAgent} from "@gpdevmate/core";
+import {PRCodeReviewAgent} from "@sgprakas/gpdevmate-core";
 
 export const pullRequestHandler = (app: Probot) => {
 

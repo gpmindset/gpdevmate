@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander"
-import { CodeReviewAgent, setLogger } from "@gpdevmate/core"
+import { CodeReviewAgent, setLogger } from "@sgprakas/gpdevmate-core"
 import {ConfigWizard} from "./config-wizard";
 import chalk from "chalk";
 import {ReviewReport} from "./review-report";

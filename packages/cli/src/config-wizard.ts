@@ -2,7 +2,7 @@ import * as path from "node:path";
 import * as os from "node:os";
 import * as fs from "node:fs";
 import {input, select} from "@inquirer/prompts";
-import {Logger} from "@gpdevmate/core";
+import {Logger} from "@sgprakas/gpdevmate-core";
 import { parse } from "@dotenvx/dotenvx"
 
 export class ConfigWizard {

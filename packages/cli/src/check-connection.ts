@@ -1,6 +1,6 @@
 import {ConfigWizard} from "./config-wizard";
 import * as fs from "node:fs";
-import {Logger, LLMProviderFactory} from "@gpdevmate/core";
+import {Logger, LLMProviderFactory} from "@sgprakas/gpdevmate-core";
 import {config} from "@dotenvx/dotenvx";
 
 export class CheckConnection {

@@ -1,4 +1,4 @@
-import { ILogger } from "@gpdevmate/core"
+import { ILogger } from "@sgprakas/gpdevmate-core"
 import chalk from "chalk";
 
 export class StyledLogger implements ILogger  {
