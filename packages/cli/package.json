@@ -1,6 +1,6 @@
 {
   "name": "@sgprakas/gpdevmate",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.0",
   "description": "gpdevmate is a CLI-based AI agent that performs intelligent code reviews",
   "bin": {
     "gpdevmate": "./dist/index.js"
