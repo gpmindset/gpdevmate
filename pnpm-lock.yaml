@@ -24,6 +24,9 @@ importers:
         specifier: ^13.4.5
         version: 13.4.5
     devDependencies:
+      '@gpdevmate/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@types/node':
         specifier: ^20.0.0
         version: 20.19.6

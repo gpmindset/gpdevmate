@@ -1,14 +1,9 @@
 import { Probot } from "probot";
+import {pullRequestHandler} from "./handlers/pull-request";
 
 export default (app: Probot) => {
-    app.on("issues.opened", async (context) => {
-        const issueComment = context.issue({
-            body: "Thanks for opening this issue!",
-        });
-        await context.octokit.issues.createComment(issueComment);
-    });
-
-    app.on("push", async (context) => {
-        console.log("New Push", context.payload)
-    })
+    /**
+     * Pull Request Handler
+     * */
+    pullRequestHandler(app)
 };

@@ -11,3 +11,20 @@ export interface AgentOptions {
     skipDirs: Set<string>;
     maxFileSizeBytes: number;
 }
+
+export interface PRAgentOptions {
+    snippets: PRFiles[],
+    maxFiles: number;
+}
+
+export interface PRReview {
+    path: string
+    line: number
+    comment: string
+}
+
+export interface PRFiles {
+    path: string;
+    content: string;
+    patch: string | undefined;
+}

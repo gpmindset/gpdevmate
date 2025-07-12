@@ -23,7 +23,8 @@
     "@types/node": "^20.0.0",
     "nock": "^14.0.5",
     "smee-client": "^2.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "@gpdevmate/core": "workspace:*"
   },
   "overrides": {
     "@types/pg": "8.15.1"
