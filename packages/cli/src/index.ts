@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Command } from "commander"
 import { CodeReviewAgent, setLogger } from "@gpdevmate/core"
 import {ConfigWizard} from "./config-wizard";
