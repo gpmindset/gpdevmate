@@ -1,12 +1,13 @@
 {
   "name": "@sgprakas/gpdevmate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "gpdevmate is a CLI-based AI agent that performs intelligent code reviews",
   "bin": {
     "gpdevmate": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsc",
@@ -22,6 +23,6 @@
     "@gpdevmate/core": "workspace:*",
     "@dotenvx/dotenvx": "^1.45.2",
     "@inquirer/prompts": "^7.6.0",
-    "chalk":"^5.4.1"
+    "chalk": "^5.4.1"
   }
 }
