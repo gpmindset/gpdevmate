@@ -1,5 +1,5 @@
 {
-  "name": "@gpdevmate/github-bot",
+  "name": "@sgprakas/gpdevmate-bot",
   "version": "1.0.0",
   "private": true,
   "description": "gpdevmate is an AI-powered Github bot code review agent that automatically analyzes pull requests and provides smart, contextual feedback using local or cloud-based LLMs.",
@@ -31,6 +31,5 @@
   },
   "engines": {
     "node": ">= 18"
-  },
-  "type": "module"
+  }
 }

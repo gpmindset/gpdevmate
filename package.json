@@ -6,7 +6,8 @@
     "example": "packages/cli/examples"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:gpdevmate-bot": "pnpm -F @sgprakas/gpdevmate-bot build",
+    "start:gpdevmate-bot": "pnpm -F @sgprakas/gpdevmate-bot start"
   },
   "repository": {
     "type": "git",
