@@ -1,6 +1,6 @@
 {
   "name": "@sgprakas/gpdevmate-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "GPdevmate's internal core library contains core logic",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
