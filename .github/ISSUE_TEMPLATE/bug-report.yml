@@ -1,0 +1,53 @@
+name: 🐛 Bug Report
+description: Report an issue with gpdevmate CLI or GitHub Bot
+title: "[Bug] "
+labels: [bug]
+assignees: sgprakas
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: What part of the project?
+      options:
+        - CLI
+        - GitHub Bot
+        - Both
+      description: Select which part the bug relates to.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: gpdevmate version
+      placeholder: e.g. 0.1.0
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear description of what the bug is and how to reproduce it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide steps, code snippets, or commands used.
+      placeholder: |
+        1. Run `gpdevmate review ./src`
+        2. See error: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Logs or Output (if any)
+      description: Paste logs, stack traces, or CLI output.
+      render: shell
+    validations:
+      required: false

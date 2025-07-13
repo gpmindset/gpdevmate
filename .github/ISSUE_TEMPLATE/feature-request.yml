@@ -1,0 +1,43 @@
+name: 💡 Feature Request
+description: Suggest a feature or enhancement for gpdevmate CLI or Bot
+title: "[Feature] "
+labels: [feature]
+assignees: sgprakas
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Which part of the project?
+      options:
+        - CLI
+        - GitHub Bot
+        - Both
+      description: Select which part you'd like the feature added to.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Current gpdevmate version
+      placeholder: e.g. 0.1.0
+    validations:
+      required: false
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: Feature Idea
+      description: Describe what you'd like to see and why it's useful.
+      placeholder: |
+        I’d like the CLI to support JSON output so I can use it in automation tools...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context / Additional Info
+      description: Add any mockups, screenshots, or examples if helpful.
+    validations:
+      required: false

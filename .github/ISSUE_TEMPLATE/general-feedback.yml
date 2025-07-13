@@ -1,0 +1,34 @@
+name: 🙋 General Feedback
+description: Share feedback, thoughts, or usage experience with gpdevmate
+title: "[Feedback] "
+labels: [feedback]
+assignees: sgprakas
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Which part of the project?
+      options:
+        - CLI
+        - GitHub Bot
+        - Both
+      description: Select what your feedback is related to.
+    validations:
+      required: true
+
+  - type: textarea
+    id: message
+    attributes:
+      label: What's on your mind?
+      description: Share your thoughts, feedback, or experience.
+      placeholder: I really liked how the CLI handles token estimation...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: gpdevmate version
+      placeholder: e.g. 0.1.0
+    validations:
+      required: false
