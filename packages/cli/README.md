@@ -1,10 +1,18 @@
-# 🧠 gpdevmate CLI — AI Code Review from Terminal
+# 🧠 gpdevmate CLI — A Simple AI Code Review from Terminal
 
 The **gpdevmate CLI** allows developers to run AI-powered code reviews directly from the terminal, using local source files and LLMs like GPT-4 or CodeLlama.
 
-It’s part of the [gpdevmate project](https://github.com/gpmindset/gpdevmate), a portfolio project by [@sgprakas](https://github.com/sgprakas), aiming to build AI tooling for developers.
+It’s part of the [gpdevmate project](https://github.com/gpmindset/gpdevmate), a project by [@sgprakas](https://github.com/sgprakas), aiming to build AI tooling for developers.
 
-> ⚠️ **Note:** This is an early preview (`v0.1.0`) — not tested in production environments. Use with caution.
+> 💡 Great for devs or learners — get AI-powered feedback on your code  
+> to help you learn, understand, and improve — not just generate.
+
+> ⚠️ **Note:** This is an early preview (`v0.1.*`).  
+> While `gpdevmate` provides useful suggestions, they may not always be accurate or context-aware.  
+> Use it as a guide — not a source of truth.
+
+> 🚧 In future versions, gpdevmate aims to learn from your codebase  
+> to provide more personalized and context-aware reviews.
 
 ---
 
@@ -193,6 +201,29 @@ function connectToDb() {
 
 ## 🙋‍♂️ Author
 
-Created by [Gnana Prakash S](https://github.com/sgprakas)
+Created by [SG Prakash](https://github.com/sgprakas)
 Fullstack dev building AI tools to learn & grow 🚀
 
+---
+
+## 🐛 Found a Bug or Issue?
+
+If you’ve found a bug or something isn’t working as expected:
+
+👉 **[Create an issue here](https://github.com/gpmindset/gpdevmate/issues/new/choose)**  
+Help us improve by sharing details — even small issues matter!
+
+---
+
+## 🗣 Got Ideas or Fixes?
+
+We’d love your contributions!
+
+> ⚠️ Before opening a pull request, please create an issue first — even for small changes.
+
+This gives us a chance to:
+- Understand the context
+- Discuss implementation
+- Avoid duplicate work
+
+➡️ [Create an issue](https://github.com/gpmindset/gpdevmate/issues/new/choose)

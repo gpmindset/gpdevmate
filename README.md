@@ -1,4 +1,4 @@
-# 🧠 gpdevmate — AI Code Review Agent for GitHub Pull Requests
+# 🧠 gpdevmate — A Simple AI Code Review Agent for GitHub Pull Requests
 
 **gpdevmate** is an AI-powered GitHub bot and CLI tool that automatically reviews pull requests or local code with helpful, structured feedback — just like a senior developer would.
 
@@ -125,5 +125,28 @@ Pull requests are welcome. Feel free to open issues or suggest improvements!
 
 ## 🙋‍♂️ Author
 
-Built by [Gnana Prakash S](https://github.com/sgprakas) —
+Built by [SG Prakash](https://github.com/sgprakas) —
 Fullstack dev learning AI by building real things 🚀
+
+---
+## 🐛 Found a Bug or Issue?
+
+If you’ve found a bug or something isn’t working as expected:
+
+👉 **[Create an issue here](https://github.com/gpmindset/gpdevmate/issues/new/choose)**  
+Help us improve by sharing details — even small issues matter!
+
+---
+
+## 🗣 Got Ideas or Fixes?
+
+We’d love your contributions!
+
+> ⚠️ Before opening a pull request, please create an issue first — even for small changes.
+
+This gives us a chance to:
+- Understand the context
+- Discuss implementation
+- Avoid duplicate work
+
+➡️ [Create an issue](https://github.com/gpmindset/gpdevmate/issues/new/choose)
