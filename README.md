@@ -66,6 +66,14 @@ To install and use it:
 
 ---
 
+
+## 🙋‍♂️ Author
+
+Built by [SG Prakash](https://sgprakas.xyz) —
+Fullstack dev learning AI by building real things 🚀
+
+---
+
 ## 🙋‍♂️ Feedback & Contributions
 
 Found a bug or idea?

@@ -105,7 +105,7 @@ Pull requests are welcome. Feel free to open issues or suggest improvements!
 
 ## 🙋‍♂️ Author
 
-Built by [SG Prakash](https://github.com/sgprakas) —
+Built by [SG Prakash](https://sgprakas.xyz) —
 Fullstack dev learning AI by building real things 🚀
 
 ---
