@@ -8,6 +8,7 @@ import {ReviewReport} from "./review-report";
 import {StyledLogger} from "./styled-logger";
 import { config } from "@dotenvx/dotenvx"
 import {CheckConnection} from "./check-connection";
+import packageJson from "../package.json"
 
 setLogger(new StyledLogger())
 
@@ -16,7 +17,7 @@ const program = new Command()
 program
     .name("gpdevmate")
     .description("GPdevmate is a AI-powered code review agent")
-    .version("1.0.0")
+    .version(packageJson.version)
 
 program
     .command("review")
